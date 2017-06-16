@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Croff/Desktop/OSLAB-EXTRA/bottom.c
+stdlib.h
+-
+stdio.h
+-
+bottom.h
+/Users/Croff/Desktop/OSLAB-EXTRA/bottom.h
+
+/Users/Croff/Desktop/OSLAB-EXTRA/bottom.h
+type.h
+/Users/Croff/Desktop/OSLAB-EXTRA/type.h
+
+/Users/Croff/Desktop/OSLAB-EXTRA/call.h
+type.h
+/Users/Croff/Desktop/OSLAB-EXTRA/type.h
+
+/Users/Croff/Desktop/OSLAB-EXTRA/main.c
+stdio.h
+-
+
+/Users/Croff/Desktop/OSLAB-EXTRA/src/call.c
+../call.h
+/Users/Croff/Desktop/OSLAB-EXTRA/call.h
+../bottom.h
+/Users/Croff/Desktop/OSLAB-EXTRA/bottom.h
+
+/Users/Croff/Desktop/OSLAB-EXTRA/test.c
+call.h
+/Users/Croff/Desktop/OSLAB-EXTRA/call.h
+bottom.h
+/Users/Croff/Desktop/OSLAB-EXTRA/bottom.h
+stdio.h
+-
+
+/Users/Croff/Desktop/OSLAB-EXTRA/type.h
+

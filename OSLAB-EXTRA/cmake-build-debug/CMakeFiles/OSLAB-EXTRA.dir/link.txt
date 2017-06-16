@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/OSLAB-EXTRA.dir/bottom.c.o CMakeFiles/OSLAB-EXTRA.dir/test.c.o CMakeFiles/OSLAB-EXTRA.dir/src/call.c.o CMakeFiles/OSLAB-EXTRA.dir/main.c.o  -o OSLAB-EXTRA 
