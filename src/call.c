@@ -2,8 +2,8 @@
 // Created by Croff on 2017/5/30.
 //
 
-#include "../call.h"
-#include "../bottom.h"
+#include "call.h"
+#include "bottom.h"
 
 #define PAGE_SIZE (4 * 1024)
 #define PAGE_TABLE_START 0
@@ -42,7 +42,7 @@ struct mem_use {
  * @param address 在物理内存中存放的地址
  * @param page_item 页表项指针
  */
-void read_page_table_item(p_address address, struct page_table_item* page_item) {
+void read_page_table_item(p_address address, struct page_table_item *page_item) {
     data_unit data[7];
     int i;
     for (i = 0; i < 7; ++i) {
@@ -67,15 +67,15 @@ void read_page_table_item(p_address address, struct page_table_item* page_item) 
  * @param address 在物理内存中的地址
  * @param page_item 页表项指针
  */
-void write_page_table_item(p_address address, struct page_table_item* page_item) {
+void write_page_table_item(p_address address, struct page_table_item *page_item) {
     data_unit data[7];
-    data[0] = (data_unit)((page_item->v_page_id >> 16) % 256);
-    data[1] = (data_unit)((page_item->v_page_id >> 8) % 256);
-    data[2] = (data_unit)((page_item->v_page_id) % 256);
-    data[3] = (data_unit)((page_item->p_page_id >> 16) % 256);
-    data[4] = (data_unit)((page_item->p_page_id >> 8) % 256);
-    data[5] = (data_unit)((page_item->p_page_id) % 256);
-    data[6] = (data_unit)((page_item->in << 7) + (page_item->use << 6));
+    data[0] = (data_unit) ((page_item->v_page_id >> 16) % 256);
+    data[1] = (data_unit) ((page_item->v_page_id >> 8) % 256);
+    data[2] = (data_unit) ((page_item->v_page_id) % 256);
+    data[3] = (data_unit) ((page_item->p_page_id >> 16) % 256);
+    data[4] = (data_unit) ((page_item->p_page_id >> 8) % 256);
+    data[5] = (data_unit) ((page_item->p_page_id) % 256);
+    data[6] = (data_unit) ((page_item->in << 7) + (page_item->use << 6));
 
     int i;
     for (i = 0; i < 7; ++i) {
@@ -89,7 +89,7 @@ void write_page_table_item(p_address address, struct page_table_item* page_item)
  * @param page_item 页表项指针
  * @return 读取结果: 1为成功, -1为失败
  */
-int find_page_table_item(unsigned int v_page_id, struct page_table_item* page_item) {
+int find_page_table_item(unsigned int v_page_id, struct page_table_item *page_item) {
     if (v_page_id * PAGE_SIZE >= DISK_SIZE) {
         return -1;
     }
@@ -109,7 +109,7 @@ int find_page_table_item(unsigned int v_page_id, struct page_table_item* page_it
  * @param page_item 页表项指针
  * @return 更新结果: 1为成功, -1为失败
  */
-int update_page_table_item(unsigned int v_page_id, struct page_table_item* page_item) {
+int update_page_table_item(unsigned int v_page_id, struct page_table_item *page_item) {
     if (v_page_id * PAGE_SIZE >= DISK_SIZE) {
         return -1;
     }
@@ -157,7 +157,7 @@ int set_p_page_bit_table_value(unsigned int page_id, int use) {
 void read_mem_use(p_address address, struct mem_use *use) {
     data_unit data[10];
     int i;
-    for (i=0; i<10; i++) {
+    for (i = 0; i < 10; i++) {
         data[i] = mem_read(address + i);
     }
 
@@ -173,19 +173,19 @@ void read_mem_use(p_address address, struct mem_use *use) {
  */
 void write_mem_use(p_address address, struct mem_use *use) {
     data_unit data[10];
-    data[0] = (data_unit)((use->pid >> 8) % 256);
-    data[1] = (data_unit)(use->pid % 256);
-    data[2] = (data_unit)((use->address >> 24) % 256);
-    data[3] = (data_unit)((use->address >> 16) % 256);
-    data[4] = (data_unit)((use->address >> 8) % 256);
-    data[5] = (data_unit)(use->address % 256);
-    data[6] = (data_unit)((use->size >> 24) % 256);
-    data[7] = (data_unit)((use->size >> 16) % 256);
-    data[8] = (data_unit)((use->size >> 8) % 256);
-    data[9] = (data_unit)(use->size % 256);
+    data[0] = (data_unit) ((use->pid >> 8) % 256);
+    data[1] = (data_unit) (use->pid % 256);
+    data[2] = (data_unit) ((use->address >> 24) % 256);
+    data[3] = (data_unit) ((use->address >> 16) % 256);
+    data[4] = (data_unit) ((use->address >> 8) % 256);
+    data[5] = (data_unit) (use->address % 256);
+    data[6] = (data_unit) ((use->size >> 24) % 256);
+    data[7] = (data_unit) ((use->size >> 16) % 256);
+    data[8] = (data_unit) ((use->size >> 8) % 256);
+    data[9] = (data_unit) (use->size % 256);
 
     int i;
-    for (i=0; i<10; i++) {
+    for (i = 0; i < 10; i++) {
         mem_write(data[i], address + i);
     }
 }
@@ -195,14 +195,14 @@ void write_mem_use(p_address address, struct mem_use *use) {
  * @param swap_in 换进内存的物理页框
  * @param swap_out 换出内存的物理页框
  */
-void swap_p_page(struct page_table_item* swap_in, struct page_table_item* swap_out) {
+void swap_p_page(struct page_table_item *swap_in, struct page_table_item *swap_out) {
     p_address mem_address = MEM_DATA_START + swap_out->p_page_id * PAGE_SIZE;
     p_address disk_address = swap_in->v_page_id * PAGE_SIZE;
     p_address offset;
 
     //将要换出内存的数据写入交换区
     for (offset = 0; offset < PAGE_SIZE; ++offset) {
-        data_unit data = (data_unit)mem_read(mem_address + offset);
+        data_unit data = (data_unit) mem_read(mem_address + offset);
         mem_write(data, SWAP_START + offset);
     }
 
@@ -233,8 +233,8 @@ void init() {
     }
 
     //初始化磁盘
-    for (address = 0; address < DISK_SIZE; address += (MEMORY_SIZE/2)) {
-        disk_save(MEMORY_SIZE/2, address, MEMORY_SIZE/2);
+    for (address = 0; address < DISK_SIZE; address += (MEMORY_SIZE / 2)) {
+        disk_save(MEMORY_SIZE / 2, address, MEMORY_SIZE / 2);
     }
 
     //初始化页表
@@ -249,7 +249,8 @@ void init() {
     }
 
     //初始化位示图
-    for (address = V_PAGE_BIT_TABLE_START; address < V_PAGE_BIT_TABLE_START + V_PAGE_BIT_TABLE_SIZE + P_PAGE_BIT_TABLE_SIZE; address++) {
+    for (address = V_PAGE_BIT_TABLE_START;
+         address < V_PAGE_BIT_TABLE_START + V_PAGE_BIT_TABLE_SIZE + P_PAGE_BIT_TABLE_SIZE; address++) {
         data_unit data = 0;
         mem_write(data, address);
     }
@@ -413,7 +414,7 @@ int allocate(v_address *address, m_size_t size, m_pid_t pid) {
 
     //计算需要的页数
     int req_page_num = size / PAGE_SIZE;
-    if(size > req_page_num * PAGE_SIZE) {
+    if (size > req_page_num * PAGE_SIZE) {
         req_page_num++;
     }
 
@@ -427,7 +428,7 @@ int allocate(v_address *address, m_size_t size, m_pid_t pid) {
         int i;
         for (i = 0; i < 8; i++) {
             found_page_num++;
-            if((data >> (7-i)) % 2) {
+            if ((data >> (7 - i)) % 2) {
                 found_start_page_id += found_page_num;
                 found_page_num = 0;
             } else {
@@ -453,7 +454,7 @@ int allocate(v_address *address, m_size_t size, m_pid_t pid) {
         data_unit data = mem_read(p_add);
         int i;
         for (i = update_page_id % 8; i < 8; i++) {
-            data += (1 << (7-i));
+            data += (1 << (7 - i));
             update_page_id++;
             if (update_page_id == found_start_page_id + found_page_num) {
                 break;
@@ -472,9 +473,9 @@ int allocate(v_address *address, m_size_t size, m_pid_t pid) {
         data_unit data = mem_read(p_add);
         int i;
         for (i = 0; i < 8; i++) {
-            if((data >> (7-i)) % 2 == 0) {
+            if ((data >> (7 - i)) % 2 == 0) {
                 //更新位示图和页表
-                data += (1 << (7-i));
+                data += (1 << (7 - i));
                 struct page_table_item item;
                 if (find_page_table_item(v_page_id, &item)) {
                     item.p_page_id = p_page_id;
@@ -566,7 +567,7 @@ int free(v_address address, m_pid_t pid) {
         data_unit data = mem_read(p_add);
         int i;
         for (i = page_id % 8; i < 8; i++) {
-            data -= (1 << (7-i));
+            data -= (1 << (7 - i));
 
             //更新物理存储位示图，释放占用
             find_page_table_item(page_id, &item);

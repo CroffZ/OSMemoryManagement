@@ -3,5 +3,5 @@ project(OSLAB-EXTRA)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES bottom.h bottom.c call.h test.c type.h src/call.c main.c)
+set(SOURCE_FILES src/bottom.h src/bottom.c src/call.h src/test.c src/type.h src/call.c src/main.c)
 add_executable(OSLAB-EXTRA ${SOURCE_FILES})

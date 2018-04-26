@@ -17,24 +17,20 @@
         return 0;
 
 // memory protection
-int test1()
-{
+int test1() {
     init();
 
     v_address va, vb;
-    if (allocate(&va, 1024, 1) != 0 || allocate(&vb, 1024, 2) != 0)
-    {
+    if (allocate(&va, 1024, 1) != 0 || allocate(&vb, 1024, 2) != 0) {
         Fail("test1: fail, allocation");
     }
 
     data_unit d;
-    if (read(&d, va, 1) != 0 || read(&d, vb, 2) != 0)
-    {
+    if (read(&d, va, 1) != 0 || read(&d, vb, 2) != 0) {
         Fail("test1: fail, normal access");
     }
 
-    if (read(&d, va + 1024, 1) != -1 || read(&d, vb - 10233, 2) != -1)
-    {
+    if (read(&d, va + 1024, 1) != -1 || read(&d, vb - 10233, 2) != -1) {
         Fail("test1: fail, illegal access");
     }
 
@@ -42,25 +38,21 @@ int test1()
 }
 
 // basic read/write
-int test2()
-{
+int test2() {
     init();
 
     v_address va;
-    if (allocate(&va, 1024, 1) != 0)
-    {
+    if (allocate(&va, 1024, 1) != 0) {
         Fail("test2: fail, allocation");
     }
 
     data_unit d = 'w';
-    if (write(d, va, 1) != 0)
-    {
+    if (write(d, va, 1) != 0) {
         Fail("test2: fail, write");
     }
 
     data_unit r;
-    if (read(&r, va, 1) != 0 || r != d)
-    {
+    if (read(&r, va, 1) != 0 || r != d) {
         Fail("test2: fail, read");
     }
 
@@ -68,53 +60,43 @@ int test2()
 }
 
 // locality
-int test3()
-{
+int test3() {
     init();
 
     v_address va;
-    if (allocate(&va, 1024, 1) != 0)
-    {
+    if (allocate(&va, 1024, 1) != 0) {
         Fail("test3: fail, allocation");
     }
 
     data_unit d = 'w';
-    if (write(d, va, 1) != 0)
-    {
+    if (write(d, va, 1) != 0) {
         Fail("test3: fail, write");
     }
 
     count_t mr, mw, dr, dw;
     evaluate(&mr, &mw, &dr, &dw);
 
-    for (int i = 0; i < 233; ++i)
-    {
-        if (write(d, va + i, 1) != 0)
-        {
+    for (int i = 0; i < 233; ++i) {
+        if (write(d, va + i, 1) != 0) {
             Fail("test3: fail, loop");
         }
     }
 
     count_t mr2, mw2, dr2, dw2;
     evaluate(&mr2, &mw2, &dr2, &dw2);
-    if (dr2 - dr > 0 || dw2 - dw > 0)
-    {
+    if (dr2 - dr > 0 || dw2 - dw > 0) {
         Fail("test3: fail, disk access");
-    }
-    else
-    {
+    } else {
         Success("test3: pass");
     }
 }
 
 // locality, multiple processes
-int test4()
-{
+int test4() {
     init();
 
     v_address va, vb;
-    if (allocate(&va, 1024 * 1024 * 70, 1) != 0 || allocate(&vb, 1024 * 1024 * 70, 2) != 0)
-    {
+    if (allocate(&va, 1024 * 1024 * 70, 1) != 0 || allocate(&vb, 1024 * 1024 * 70, 2) != 0) {
         Fail("test4: fail, allocation");
     }
 
@@ -123,45 +105,37 @@ int test4()
 
     data_unit d = 'k';
     data_unit v;
-    for (int i = 0; i < 23333; ++i)
-    {
+    for (int i = 0; i < 23333; ++i) {
         if (write(d, va, 1) != 0
             || write(d, va + 1024 * 1024 * 60, 1) != 0
             || write(d, vb, 2) != 0
-            || write(d, vb + 1024 * 1024 * 60, 2) != 0)
-        {
+            || write(d, vb + 1024 * 1024 * 60, 2) != 0) {
             Fail("test4: fail, loop");
         }
 
         if (read(&v, va, 1) != 0
             || read(&v, va + 1024 * 1024 * 60, 1) != 0
             || read(&v, vb, 2) != 0
-            || read(&v, vb + 1024 * 1024 * 60, 2) != 0)
-        {
+            || read(&v, vb + 1024 * 1024 * 60, 2) != 0) {
             Fail("test4: fail, loop");
         }
     }
 
     count_t mr2, mw2, dr2, dw2;
     evaluate(&mr2, &mw2, &dr2, &dw2);
-    if (dr2 - dr > 32000000 || dw2 - dw > 64000000)
-    {
+    if (dr2 - dr > 32000000 || dw2 - dw > 64000000) {
         Fail("test4: fail, disk access");
-    }
-    else
-    {
+    } else {
         Success("test4: pass");
     }
 }
 
 // basic allocation
-int test5()
-{
+int test5() {
     init();
     v_address va, vb, vc, vd;
     if (allocate(&va, 1024 * 1024 * 8, 1) != 0 || allocate(&vb, 1024 * 1024 * 8, 2) != 0
-        || allocate(&vc, 1024 * 1024 * 8, 3) != 0 || allocate(&vd, 1024 * 1024 * 8, 4) != 0)
-    {
+        || allocate(&vc, 1024 * 1024 * 8, 3) != 0 || allocate(&vd, 1024 * 1024 * 8, 4) != 0) {
         Fail("test5: fail, allocation");
     }
 
@@ -170,8 +144,7 @@ int test5()
 }
 
 // basic allocation/free
-int test6()
-{
+int test6() {
     init();
 
     v_address vs[91];
@@ -181,40 +154,31 @@ int test6()
     evaluate(&mr1, &mw1, &dr1, &dw1);
 
     // pid: 1 - 90
-    for (m_size_t i = 0; i < 90; ++i)
-    {
-        if (allocate(vs + i, size, i+1) != 0)
-        {
+    for (m_size_t i = 0; i < 90; ++i) {
+        if (allocate(vs + i, size, i + 1) != 0) {
             Fail("test6: fail, allocation");
         }
     }
 
     // pid: 1 - 80
-    for (m_size_t j = 0; j < 80; ++j)
-    {
-        if (free(vs[j], j+1) != 0)
-        {
+    for (m_size_t j = 0; j < 80; ++j) {
+        if (free(vs[j], j + 1) != 0) {
             Fail("test6: fail, free");
         }
     }
 
     // pid: 1 - 80
-    for (m_size_t i = 0; i < 80; ++i)
-    {
-        if (allocate(vs + i, size, i+1) != 0)
-        {
+    for (m_size_t i = 0; i < 80; ++i) {
+        if (allocate(vs + i, size, i + 1) != 0) {
             Fail("test6: fail, allocation2");
         }
     }
 
     count_t mr2, mw2, dr2, dw2;
     evaluate(&mr2, &mw2, &dr2, &dw2);
-    if (dr2 - dr1 > 0 || dw2 - dw1 > 0)
-    {
+    if (dr2 - dr1 > 0 || dw2 - dw1 > 0) {
         Fail("test6: fail, disk access");
-    }
-    else
-    {
+    } else {
         Success("test6: pass");
     }
 
@@ -222,8 +186,7 @@ int test6()
 }
 
 // fragment handle
-int test7()
-{
+int test7() {
     init();
 
     v_address vs[91];
@@ -233,48 +196,38 @@ int test7()
     evaluate(&mr1, &mw1, &dr1, &dw1);
 
     // pid : 1 - 90
-    for (m_size_t i = 0; i < 90; ++i)
-    {
-        if (allocate(vs + i, size, i+1) != 0)
-        {
+    for (m_size_t i = 0; i < 90; ++i) {
+        if (allocate(vs + i, size, i + 1) != 0) {
             Fail("test7: fail, allocation");
         }
     }
 
     // pid : 1, 3, ..., 89
-    for (m_size_t j = 0; j < 45; ++j)
-    {
-        if (free(vs[j * 2], j*2+1) != 0)
-        {
+    for (m_size_t j = 0; j < 45; ++j) {
+        if (free(vs[j * 2], j * 2 + 1) != 0) {
             Fail("test7: fail, free");
         }
     }
 
-    if (allocate(vs + 90, size * 45, 91) != 0)
-    {
+    if (allocate(vs + 90, size * 45, 91) != 0) {
         Fail("test7: fail, fragments");
     }
 
     count_t mr2, mw2, dr2, dw2;
     evaluate(&mr2, &mw2, &dr2, &dw2);
-    if (dr2 - dr1 > 0 || dw2 - dw1 > 0)
-    {
+    if (dr2 - dr1 > 0 || dw2 - dw1 > 0) {
         Fail("test7: fail, disk access");
-    }
-    else
-    {
+    } else {
         Success("test7: pass");
     }
 }
 
 // big capacity allocation
-int test8()
-{
+int test8() {
     init();
     v_address va;
     m_size_t size = 1024 * 1024 * 233;
-    if (allocate(&va, size, 1) != 0)
-    {
+    if (allocate(&va, size, 1) != 0) {
         Fail("test8: fail, big allocation");
     }
 
@@ -284,13 +237,11 @@ int test8()
 
     v_address vb = va + size - 2;
 
-    if (write(d1, va, 1) != 0 || write(d2, vb, 1) != 0)
-    {
+    if (write(d1, va, 1) != 0 || write(d2, vb, 1) != 0) {
         Fail("test8: fail, write");
     }
 
-    if (read(&v1, va, 1) != 0 || read(&v2, vb, 1) != 0 || v1 != d1 || v2 != d2)
-    {
+    if (read(&v1, va, 1) != 0 || read(&v2, vb, 1) != 0 || v1 != d1 || v2 != d2) {
         Fail("test8: fail, read");
     }
 
