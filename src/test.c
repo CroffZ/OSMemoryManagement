@@ -248,3 +248,15 @@ int test8() {
     Success("test8: pass");
 }
 
+int main() {
+    init();
+    test1();
+    test2();
+    test3();
+    test4();
+    test5();
+    test6();
+    test7();
+    test8();
+    return 0;
+}
