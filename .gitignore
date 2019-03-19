@@ -1,5 +1,6 @@
 
-# Created by https://www.gitignore.io/api/c,c++,clion,cmake
+# Created by https://www.gitignore.io/api/c,c++,clion,cmake,jetbrains
+# Edit at https://www.gitignore.io/?templates=c,c++,clion,cmake,jetbrains
 
 ### C ###
 # Prerequisites
@@ -55,41 +56,71 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+### C++ ###
+# Prerequisites
+
+# Compiled Object files
+*.slo
+
+# Precompiled Headers
+
+# Compiled Dynamic libraries
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+
+# Executables
+
 ### CLion ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-# User-specific stuff:
+# User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
-.idea/dictionaries
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
 
-# Sensitive or high-churn files:
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
-.idea/**/dataSources.xml
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
 
-# Gradle:
+# Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
 
-# CMake
-cmake-build-debug/
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
 
-# Mongo Explorer plugin:
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
 .idea/**/mongoSettings.xml
 
-## File-based project format:
+# File-based project format
 *.iws
 
-## Plugin-specific files:
-
 # IntelliJ
-/out/
+out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -100,14 +131,17 @@ atlassian-ide-plugin.xml
 # Cursive Clojure plugin
 .idea/replstate.xml
 
-# Ruby plugin and RubyMine
-/.rakeTasks
-
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
 
 ### CLion Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
@@ -121,6 +155,7 @@ fabric.properties
 .idea/sonarlint
 
 ### CMake ###
+CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
@@ -130,7 +165,60 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
-build
+_deps
 
+### CMake Patch ###
+# External projects
+*-prefix/
 
-# End of https://www.gitignore.io/api/c,c++,clion,cmake
+### JetBrains ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+
+# Generated files
+
+# Sensitive or high-churn files
+
+# Gradle
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
+
+# CMake
+
+# Mongo Explorer plugin
+
+# File-based project format
+
+# IntelliJ
+
+# mpeltonen/sbt-idea plugin
+
+# JIRA plugin
+
+# Cursive Clojure plugin
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+
+# Editor-based Rest Client
+
+# Android studio 3.1+ serialized cache file
+
+### JetBrains Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+# Sonarlint plugin
+
+# End of https://www.gitignore.io/api/c,c++,clion,cmake,jetbrains
